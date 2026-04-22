@@ -1,0 +1,30 @@
+{
+  "extends": "fastify-tsconfig",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "./dist",
+    "module": "esnext",
+    "target": "ES2023",
+    "lib": ["esnext"],
+    "types": ["node"],
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "typeRoots": ["./node_modules/@types"],
+    "removeComments": true,
+    "inlineSources": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "noStrictGenericChecks": false
+  }
+}
