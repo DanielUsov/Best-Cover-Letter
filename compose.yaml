@@ -1,0 +1,39 @@
+services:
+  db:
+    env_file: .env
+    image: postgres:12.17
+    environment:
+      POSTGRES_HOST: ${PSQL_HOST}
+      POSTGRES_USER: ${PSQL_USER}
+      POSTGRES_PASSWORD: ${PSQL_PASSWORD}
+      POSTGRES_DB: ${PSQL_DATABASE}
+    ports:
+      - ${PSQL_PORT}:5432
+    restart: always
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    # networks:
+    #   - db-net
+
+#   server:
+#     env_file: .env
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     restart: always
+#     ports:
+#       - ${SERVER_PORT}:${SERVER_PORT}
+#     environment:
+#       DB_HOST: db
+#       DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db:${DB_PORT}/${DB_NAME}?schema=public
+#     depends_on:
+#       - db
+#     networks:
+#       - server-net
+
+# networks:
+#   server-net:
+#     driver: bridge
+
+volumes:
+  db_volume:
