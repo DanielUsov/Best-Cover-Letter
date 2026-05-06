@@ -32,7 +32,7 @@ async function coverLatterGenerate(vacancyURL: string, fastify: FastifyInstance)
 
   const response = await api.models
     .generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-2.5-flash-lite',
       contents: [
         createUserContent([
           text,

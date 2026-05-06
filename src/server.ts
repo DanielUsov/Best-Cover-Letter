@@ -3,7 +3,7 @@ import closeWithGrace from 'close-with-grace';
 import Fastify from 'fastify';
 import fp from 'fastify-plugin';
 import type { FastifyInstance } from 'fastify/types/instance';
-import serviceApp from './app.js';
+import serviceApp from './app';
 
 function getLoggerOptions() {
   if (process.stdout.isTTY) {

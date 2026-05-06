@@ -1,6 +1,6 @@
 {
   "name": "best-cover-letter",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Simple fastify app for create adaptive cover letter based on vacancies using ai",
   "homepage": "https://github.com/DanielUsov/Best-Cover-Letter#readme",
   "bugs": {
@@ -15,10 +15,12 @@
   "type": "module",
   "main": "src/server.ts",
   "scripts": {
-    "start": "npm run build && fastify start -l info dist/app.js",
     "build": "tsc",
     "dev": "tsx watch --env-file=.env .",
-    "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js"
+    "clean": "rm -rf dist",
+    "start": "tsx dist/src/server.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@fastify/env": "^6.0.0",

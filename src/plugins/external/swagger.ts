@@ -1,9 +1,10 @@
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fp from 'fastify-plugin';
-import { description, name, version } from '../../../package.json';
+import projectData from '../../../package.json' with { type: 'json' };
 
 export default fp(async (fastify) => {
+  const { description, name, version } = projectData;
   fastify.register(fastifySwagger, {
     openapi: {
       info: {
