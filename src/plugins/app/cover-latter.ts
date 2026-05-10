@@ -26,7 +26,6 @@ async function coverLetterСonstructor(
 async function coverLetterGenerate(vacancyURL: string, fastify: FastifyInstance) {
   const vacancyData = await fastify.parser.parsingVacancy(vacancyURL);
   const text = await coverLetterСonstructor(fastify, vacancyData);
-  const { api } = await fastify.geminiClient;
   const files = fastify.fileManager.files;
 
   if (!fastify.fileManager.fileStatus || !files[0] || !files[1]) {
@@ -35,13 +34,16 @@ async function coverLetterGenerate(vacancyURL: string, fastify: FastifyInstance)
     throw new Error(errorMessege);
   }
 
-  const response = await api.models
+  const response = await fastify.geminiClient.models
     .generateContent({
       model: 'gemini-2.5-flash-lite',
       contents: [{ text }, files[0], files[1]],
       config: {
         systemInstruction: await loadSystemSkills(fastify),
-        temperature: 0.5,
+        temperature: 0.7,
+        topP: 0.9,
+        topK: 40,
+        maxOutputTokens: 1024,
       },
     })
     .then((data) => data.text)
@@ -49,6 +51,8 @@ async function coverLetterGenerate(vacancyURL: string, fastify: FastifyInstance)
       fastify.log.error(`Gemini Error: ${error}`);
       throw new Error(`Gemini Error`);
     });
+
+  fastify.log.warn(response);
 
   return response;
 }

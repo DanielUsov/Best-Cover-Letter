@@ -19,7 +19,7 @@ const routes: FastifyPluginAsyncJsonSchemaToTs = async (fastify): Promise<void> 
         tags: ['Healthcheck'],
       },
     },
-    async (request, reply): Promise<void> => {
+    async (_request, reply): Promise<void> => {
       reply.code(200).send({
         status: 'ok',
       });

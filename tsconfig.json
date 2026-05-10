@@ -1,7 +1,7 @@
 {
   "extends": "fastify-tsconfig",
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "./dist",
     "module": "preserve",
     "target": "ES2023",
