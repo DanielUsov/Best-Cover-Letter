@@ -13,6 +13,7 @@ const routes: FastifyPluginAsyncJsonSchemaToTs = async (fastify): Promise<void> 
             },
           },
         },
+        tags: ['Cover-Letter'],
       },
     },
     async (request, reply): Promise<void> => {
@@ -26,14 +27,14 @@ const routes: FastifyPluginAsyncJsonSchemaToTs = async (fastify): Promise<void> 
         throw new Error(`No vacancy content found at: ${vacancyURL}`);
       }
 
-      const geminiAnswear = await fastify.coverLatter.coverLatterGenerate(
+      const geminiAnswear = await fastify.coverLetter.coverLetterGenerate(
         vacancyURL,
         fastify,
       );
 
       reply.code(200).send({
         vacancyURL,
-        coverLatter: geminiAnswear,
+        coverLetter: geminiAnswear,
       });
     },
   );

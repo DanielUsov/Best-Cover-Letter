@@ -14,8 +14,8 @@ export default fp(async (fastify) => {
       },
       tags: [
         {
-          name: 'User',
-          description: 'Users endpoints',
+          name: 'Cover-Letter',
+          description: 'Cover letter endpoints',
         },
       ],
     },

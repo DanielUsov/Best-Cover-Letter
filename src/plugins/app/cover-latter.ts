@@ -6,7 +6,7 @@ import { loadMasterPrompt, loadSystemSkills } from '../../utils/skills';
 
 declare module 'fastify' {
   interface FastifyInstance {
-    coverLatter: ReturnType<typeof coverLatter>;
+    coverLetter: ReturnType<typeof coverLetter>;
   }
 }
 
@@ -23,7 +23,7 @@ async function coverLetterСonstructor(
   );
 }
 
-async function coverLatterGenerate(vacancyURL: string, fastify: FastifyInstance) {
+async function coverLetterGenerate(vacancyURL: string, fastify: FastifyInstance) {
   const vacancyData = await fastify.parser.parsingVacancy(vacancyURL);
   const text = await coverLetterСonstructor(fastify, vacancyData);
   const { api } = await fastify.geminiClient;
@@ -53,18 +53,18 @@ async function coverLatterGenerate(vacancyURL: string, fastify: FastifyInstance)
   return response;
 }
 
-function coverLatter() {
+function coverLetter() {
   return {
-    coverLatterGenerate,
+    coverLetterGenerate,
   };
 }
 
 export default fp(
   async (fastify): Promise<void> => {
-    fastify.decorate('coverLatter', coverLatter());
+    fastify.decorate('coverLetter', coverLetter());
   },
   {
-    name: 'coverLatter',
+    name: 'coverLetter',
     dependencies: ['geminiClient', 'parser', 'config', 'fileManager'],
   },
 );

@@ -13,6 +13,7 @@ const routes: FastifyPluginAsyncJsonSchemaToTs = async (fastify): Promise<void> 
             },
           },
         },
+        tags: ['Cover-Letter'],
       },
     },
     async (request, reply): Promise<void> => {
