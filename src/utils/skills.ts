@@ -1,3 +1,4 @@
+import { readdirSync } from 'node:fs';
 import type { FastifyInstance } from 'fastify';
 import { promises as fs } from 'fs';
 import path from 'node:path';
@@ -7,7 +8,7 @@ const SKILLS_DIR = path.join(ROOT_DIR, 'src', 'skills');
 
 export async function loadSystemSkills(fastify: FastifyInstance): Promise<string> {
   try {
-    const files = await fs.readdir(SKILLS_DIR);
+    const files = readdirSync(SKILLS_DIR);
     const filteredFiles = files.filter((file) => file !== 'master.md');
     const readFiles = filteredFiles.map((file) =>
       fs.readFile(path.join(SKILLS_DIR, file), 'utf-8'),

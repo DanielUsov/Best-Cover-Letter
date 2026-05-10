@@ -1,4 +1,3 @@
-import { createPartFromUri, createUserContent } from '@google/genai/node';
 import type { FastifyInstance } from 'fastify';
 import fp from 'fastify-plugin';
 import type { ParsingVacancy } from '../../@types/parser';
@@ -27,26 +26,29 @@ async function coverLetterСonstructor(
 async function coverLatterGenerate(vacancyURL: string, fastify: FastifyInstance) {
   const vacancyData = await fastify.parser.parsingVacancy(vacancyURL);
   const text = await coverLetterСonstructor(fastify, vacancyData);
+  const { api } = await fastify.geminiClient;
+  const files = fastify.fileManager.files;
 
-  const { files, api } = await fastify.geminiClient;
+  if (!fastify.fileManager.fileStatus || !files[0] || !files[1]) {
+    const errorMessege = 'Files error';
+    fastify.log.error(errorMessege);
+    throw new Error(errorMessege);
+  }
 
   const response = await api.models
     .generateContent({
       model: 'gemini-2.5-flash-lite',
-      contents: [
-        createUserContent([
-          text,
-          createPartFromUri(files[0]?.uri!, files[0]?.mimeType!),
-          createPartFromUri(files[1]?.uri!, files[1]?.mimeType!),
-        ]),
-      ],
+      contents: [{ text }, files[0], files[1]],
       config: {
         systemInstruction: await loadSystemSkills(fastify),
         temperature: 0.5,
       },
     })
-    .then((data) => data.text);
-  fastify.log.info(response);
+    .then((data) => data.text)
+    .catch((error) => {
+      fastify.log.error(`Gemini Error: ${error}`);
+      throw new Error(`Gemini Error`);
+    });
 
   return response;
 }
@@ -63,6 +65,6 @@ export default fp(
   },
   {
     name: 'coverLatter',
-    dependencies: ['gemini', 'parser', 'config'],
+    dependencies: ['geminiClient', 'parser', 'config', 'fileManager'],
   },
 );
