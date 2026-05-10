@@ -1,6 +1,6 @@
 {
   "name": "best-cover-letter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Simple fastify app for create adaptive cover letter based on vacancies using ai",
   "homepage": "https://github.com/DanielUsov/Best-Cover-Letter#readme",
   "bugs": {
